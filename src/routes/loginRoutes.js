@@ -1,8 +1,42 @@
 import { Router } from "express";
-import {login, registrarUsuario} from '../controladores/loginCtrl.js'
+import {
+  login,
+  registrarUsuario,
+  listarUsuarios,
+  obtenerUsuarioPorId,
+  actualizarUsuario,
+  desactivarUsuario,
+  eliminarUsuario,
+} from "../controladores/loginCtrl.js";
 
-const router=Router();
+import { verificarToken } from "../middlewares/verificarToken.js";
+import { verificarRolAdmin } from "../middlewares/verificarRol.js";
 
-router.post('/usuarios',login)
-router.post('/usuarios/registro', registrarUsuario)
-export default router
+const router = Router();
+
+// ============================
+// 🧠 LOGIN y REGISTRO (libres)
+// ============================
+router.post("/usuarios", login);
+router.post("/usuarios/registro", registrarUsuario);
+
+// ============================
+// 🔐 RUTAS PROTEGIDAS
+// ============================
+
+// 👁️ Listar todos los usuarios (solo admin)
+router.get("/usuarios", verificarToken, verificarRolAdmin, listarUsuarios);
+
+// 🔍 Obtener usuario por ID (el propio usuario o admin)
+router.get("/usuarios/:id", verificarToken, obtenerUsuarioPorId);
+
+// ✏️ Actualizar datos del usuario (solo autenticado)
+router.put("/usuarios/:id", verificarToken, actualizarUsuario);
+
+// 🚫 Desactivar usuario (borrado lógico)
+router.put("/usuarios/desactivar/:id", verificarToken, desactivarUsuario);
+
+// ❌ Eliminar físicamente un usuario (solo admin)
+router.delete("/usuarios/:id", verificarToken, verificarRolAdmin, eliminarUsuario);
+
+export default router;
