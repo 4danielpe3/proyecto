@@ -35,8 +35,8 @@ router.get("/usuarios/:id", verificarToken, obtenerUsuarioPorId);
 router.put("/usuarios/:id", verificarToken, actualizarUsuario);
 
 // 🚫 Desactivar usuario (borrado lógico)
-router.put("/usuarios/desactivar/:id", verificarToken, desactivarUsuario);
-router.put("/usuarios/activar/:id", verificarToken, activarUsuario);
+router.put("/usuarios/desactivar/:id", verificarToken,verificarRolAdmin, desactivarUsuario);
+router.put("/usuarios/activar/:id", verificarToken,verificarRolAdmin, activarUsuario);
 
 // ❌ Eliminar físicamente un usuario (solo admin)
 router.delete("/usuarios/:id", verificarToken, verificarRolAdmin, eliminarUsuario);
