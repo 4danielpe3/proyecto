@@ -175,3 +175,22 @@ export const eliminarUsuario = async (req, res) => {
     res.status(500).json({ message: "Error interno del servidor" });
   }
 };
+
+// ======================
+// ✅ ACTIVAR USUARIO (admin o el propio usuario)
+// ======================
+export const activarUsuario = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    await conmysql.query(
+      "UPDATE usuarios SET estado = 'activo' WHERE user_id = ?",
+      [id]
+    );
+
+    res.json({ message: "Usuario activado correctamente" });
+  } catch (error) {
+    console.error("Error al activar usuario:", error);
+    res.status(500).json({ message: "Error interno del servidor" });
+  }
+};

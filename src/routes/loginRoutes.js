@@ -7,6 +7,7 @@ import {
   actualizarUsuario,
   desactivarUsuario,
   eliminarUsuario,
+  activarUsuario
 } from "../controladores/loginCtrl.js";
 
 import { verificarToken } from "../middlewares/verificarToken.js";
@@ -35,6 +36,7 @@ router.put("/usuarios/:id", verificarToken, actualizarUsuario);
 
 // 🚫 Desactivar usuario (borrado lógico)
 router.put("/usuarios/desactivar/:id", verificarToken, desactivarUsuario);
+router.put("/usuarios/activar/:id", verificarToken, activarUsuario);
 
 // ❌ Eliminar físicamente un usuario (solo admin)
 router.delete("/usuarios/:id", verificarToken, verificarRolAdmin, eliminarUsuario);
