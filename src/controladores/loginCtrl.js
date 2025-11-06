@@ -34,6 +34,7 @@ export const login = async (req, res) => {
       return res.status(401).json({ message: "Contraseña incorrecta" });
     }
 
+    // Generar token con rol y datos del usuario
     const token = jwt.sign(
       { id: user.user_id, username: user.username, rol: user.rol },
       process.env.JWT_SECRET,
