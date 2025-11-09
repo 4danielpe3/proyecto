@@ -5,7 +5,8 @@ import cors from 'cors';
 // importar las rutas
 import productosRoutes from './routes/productosRoutes.js';
 import loginRoutes from './routes/loginRoutes.js';
-import detallesRoutes from './routes/detallesRoutes.js'
+import detallesRoutes from './routes/detallesRoutes.js';
+import vehiculoRoutes from './routes/vehiculosRoutes.js'
 
 const app = express();
 
@@ -27,9 +28,10 @@ app.use(fileUpload({
 app.use(express.json());
 
 // Rutas de la API
-app.use('/api', detallesRoutes)
+app.use('/api', detallesRoutes);
 app.use('/api', productosRoutes);
 app.use('/api', loginRoutes);
+app.use('/api', vehiculoRoutes);
 
 // Manejar endpoints no encontrados
 app.use((req, res, next) => {
