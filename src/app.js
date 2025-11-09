@@ -6,7 +6,8 @@ import cors from 'cors';
 import productosRoutes from './routes/productosRoutes.js';
 import loginRoutes from './routes/loginRoutes.js';
 import detallesRoutes from './routes/detallesRoutes.js';
-import vehiculoRoutes from './routes/vehiculosRoutes.js'
+import vehiculoRoutes from './routes/vehiculosRoutes.js';
+import solicitudesRoutes from './routes/solicitudesRoutes.js'
 
 const app = express();
 
@@ -32,6 +33,7 @@ app.use('/api', detallesRoutes);
 app.use('/api', productosRoutes);
 app.use('/api', loginRoutes);
 app.use('/api', vehiculoRoutes);
+app.use('/api', solicitudesRoutes)
 
 // Manejar endpoints no encontrados
 app.use((req, res, next) => {
