@@ -10,6 +10,19 @@ export const crearSolicitud = async (req, res) => {
       return res.status(400).json({ message: "Faltan datos obligatorios" });
     }
 
+    // 🔍 Verificar que el vehículo pertenezca al usuario autenticado
+    const [vehiculo] = await conmysql.query(
+      `SELECT * FROM vehiculos WHERE vehiculo_id = ? AND user_id = ?`,
+      [vehiculo_id, user_id]
+    );
+
+    if (vehiculo.length === 0) {
+      return res.status(403).json({
+        message: "No puedes crear una solicitud para un vehículo que no te pertenece"
+      });
+    }
+
+    // ✅ Insertar la solicitud si la verificación pasa
     const [result] = await conmysql.query(
       `INSERT INTO solicitudes (user_id, vehiculo_id, motivo)
        VALUES (?, ?, ?)`,
@@ -112,7 +125,9 @@ export const eliminarSolicitud = async (req, res) => {
       [id]
     );
 
-    if (result.affectedRows === 0) return res.status(404).json({ message: "Solicitud no encontrada" });
+    if (result.affectedRows === 0)
+      return res.status(404).json({ message: "Solicitud no encontrada" });
+
     res.json({ message: "Solicitud eliminada correctamente" });
   } catch (error) {
     console.error("Error al eliminar solicitud:", error);
