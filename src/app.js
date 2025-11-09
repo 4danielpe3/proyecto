@@ -3,9 +3,9 @@ import fileUpload from 'express-fileupload';
 import cors from 'cors';
 
 // importar las rutas
-import clientesRoutes from './routes/clientesRoutes.js';
 import productosRoutes from './routes/productosRoutes.js';
 import loginRoutes from './routes/loginRoutes.js';
+import detallesRoutes from './routes/detallesRoutes.js'
 
 const app = express();
 
@@ -27,7 +27,7 @@ app.use(fileUpload({
 app.use(express.json());
 
 // Rutas de la API
-app.use('/api', clientesRoutes);
+app.use('/api', detallesRoutes)
 app.use('/api', productosRoutes);
 app.use('/api', loginRoutes);
 
