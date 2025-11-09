@@ -8,7 +8,8 @@ import loginRoutes from './routes/loginRoutes.js';
 import detallesRoutes from './routes/detallesRoutes.js';
 import vehiculoRoutes from './routes/vehiculosRoutes.js';
 import solicitudesRoutes from './routes/solicitudesRoutes.js';
-import mensajeRoutes from './routes/mensajeRoutes.js'
+import mensajeRoutes from './routes/mensajeRoutes.js';
+import registrosRoutes from './routes/registrosRoutes.js'
 
 const app = express();
 
@@ -35,7 +36,8 @@ app.use('/api', productosRoutes);
 app.use('/api', loginRoutes);
 app.use('/api', vehiculoRoutes);
 app.use('/api', solicitudesRoutes);
-app.use('/api', mensajeRoutes)
+app.use('/api', mensajeRoutes);
+app.use('/api', registrosRoutes)
 
 // Manejar endpoints no encontrados
 app.use((req, res, next) => {
