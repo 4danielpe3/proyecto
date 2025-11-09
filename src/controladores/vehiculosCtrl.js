@@ -28,7 +28,7 @@ export const getVehiculoById = async (req, res) => {
 export const postVehiculo = async (req, res) => {
   try {
     const { placa, marca, modelo, color } = req.body;
-    const user_id = req.user.user_id; // el token tiene info del usuario autenticado
+    const user_id = req.user.id;  // el token tiene info del usuario autenticado
     let imagen_url = null;
 
     // Verificar si se subió imagen
