@@ -15,7 +15,7 @@ const router = Router();
 // ============================
 // 👤 CLIENTE AUTENTICADO
 // ============================
-router.post("/detalles_usuario", verificarToken, crearDetalles);
+router.post("/detalles", verificarToken, crearDetalles);
 router.get("/detalles/misdatos", verificarToken, obtenerMisDetalles);
 router.put("/detalles/misdatos", verificarToken, actualizarMisDetalles);
 
