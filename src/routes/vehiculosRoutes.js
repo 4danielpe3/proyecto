@@ -16,6 +16,7 @@ const router = Router();
 // Solo admin puede listar todos los vehículos
 router.get("/vehiculos", verificarToken, verificarRolAdmin, getVehiculos);
 
+router.get("/vehiculos/misvehiculos", verificarToken, getMisVehiculos);
 // Cliente autenticado puede ver sus vehículos
 router.get("/vehiculos/:id", verificarToken, getVehiculoById);
 
@@ -29,6 +30,6 @@ router.put("/vehiculos/:id", verificarToken, putVehiculo);
 router.delete("/vehiculos/:id", verificarToken, verificarRolAdmin, deleteVehiculo);
 
 // Vehículos del usuario autenticado
-router.get("/vehiculos/misvehiculos", verificarToken, getMisVehiculos);
+
 
 export default router;
