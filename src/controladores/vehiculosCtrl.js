@@ -95,3 +95,20 @@ export const deleteVehiculo = async (req, res) => {
     res.status(500).json({ message: "Error al eliminar vehículo" });
   }
 };
+
+// 🚗 Listar vehículos del usuario autenticado
+export const getMisVehiculos = async (req, res) => {
+  try {
+    const user_id = req.user.id;
+
+    const [result] = await conmysql.query(
+      "SELECT * FROM vehiculos WHERE user_id = ?",
+      [user_id]
+    );
+
+    res.json(result);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error al obtener tus vehículos" });
+  }
+};

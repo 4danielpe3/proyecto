@@ -4,7 +4,8 @@ import {
   getVehiculoById,
   postVehiculo,
   putVehiculo,
-  deleteVehiculo
+  deleteVehiculo,
+  getMisVehiculos 
 } from "../controladores/vehiculosCtrl.js";
 
 import { verificarToken } from "../middlewares/verificarToken.js";
@@ -26,5 +27,8 @@ router.put("/vehiculos/:id", verificarToken, putVehiculo);
 
 // Eliminar vehículo (solo admin)
 router.delete("/vehiculos/:id", verificarToken, verificarRolAdmin, deleteVehiculo);
+
+// Vehículos del usuario autenticado
+router.get("/vehiculos/misvehiculos", verificarToken, getMisVehiculos);
 
 export default router;
