@@ -27,7 +27,7 @@ router.post("/vehiculos", verificarToken, postVehiculo);
 router.put("/vehiculos/:id", verificarToken, putVehiculo);
 
 // Eliminar vehículo (solo admin)
-router.delete("/vehiculos/:id", verificarToken, verificarRolAdmin, deleteVehiculo);
+router.delete("/vehiculos/:id", verificarToken, deleteVehiculo);
 
 // Vehículos del usuario autenticado
 
