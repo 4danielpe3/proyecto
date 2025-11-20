@@ -4,7 +4,8 @@ import {
   obtenerMisDetalles,
   actualizarMisDetalles,
   listarDetalles,
-  eliminarDetalle
+  eliminarDetalle,
+  obtenerDetallesPorUsuario
 } from "../controladores/detallesCtrl.js";
 
 import { verificarToken } from "../middlewares/verificarToken.js";
@@ -22,6 +23,8 @@ router.put("/detalles/misdatos", verificarToken, actualizarMisDetalles);
 // ============================
 // 👑 ADMINISTRADOR
 // ============================
+// 👑 ADMINISTRADOR
+router.get("/detalles/usuario/:user_id", verificarToken, verificarRolAdmin, obtenerDetallesPorUsuario);
 router.get("/detalles", verificarToken, verificarRolAdmin, listarDetalles);
 router.delete("/detalles/:detalle_id", verificarToken, verificarRolAdmin, eliminarDetalle);
 

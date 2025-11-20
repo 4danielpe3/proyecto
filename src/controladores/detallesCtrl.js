@@ -101,3 +101,14 @@ export const eliminarDetalle = async (req, res) => {
     res.status(500).json({ message: "Error interno del servidor" });
   }
 };
+
+export const obtenerDetallesPorUsuario = async (req, res) => {
+  const { user_id } = req.params;
+  try {
+    const detalle = await pool.query('SELECT * FROM detalles WHERE user_id = ?', [user_id]);
+    if (detalle.length === 0) return res.status(404).json({ message: 'No se encontraron detalles' });
+    res.json(detalle[0]);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
