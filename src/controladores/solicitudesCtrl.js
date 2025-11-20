@@ -134,3 +134,36 @@ export const eliminarSolicitud = async (req, res) => {
     res.status(500).json({ message: "Error interno del servidor" });
   }
 };
+
+// PUT /api/solicitudes/:id/motivo
+export const actualizarMotivo = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { motivo } = req.body;
+    const user_id = req.user.id; // viene del token
+
+    if (!motivo) {
+      return res.status(400).json({ message: "El motivo es obligatorio" });
+    }
+
+    // Verificar que la solicitud pertenezca al usuario
+    const [rows] = await conmysql.query(
+      "SELECT * FROM solicitudes WHERE solicitud_id = ? AND user_id = ?",
+      [id, user_id]
+    );
+    if (rows.length === 0) {
+      return res.status(403).json({ message: "No tienes permiso para modificar esta solicitud" });
+    }
+
+    // Actualizar motivo
+    await conmysql.query(
+      "UPDATE solicitudes SET motivo = ? WHERE solicitud_id = ?",
+      [motivo, id]
+    );
+
+    res.json({ message: "Motivo actualizado correctamente" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error interno del servidor" });
+  }
+};

@@ -5,7 +5,8 @@ import {
   listarMisSolicitudes,
   obtenerSolicitud,
   actualizarEstado,
-  eliminarSolicitud
+  eliminarSolicitud,
+  actualizarMotivo
 } from "../controladores/solicitudesCtrl.js";
 
 import { verificarToken } from "../middlewares/verificarToken.js";
@@ -17,7 +18,8 @@ router.post("/solicitudes", verificarToken, crearSolicitud);
 router.get("/solicitudes", verificarToken, verificarRolAdmin, listarSolicitudes);
 router.get("/solicitudes/mis-solicitudes", verificarToken, listarMisSolicitudes);
 router.get("/solicitudes/:id", verificarToken, obtenerSolicitud);
-router.put("/solicitudes/:id", verificarToken, actualizarEstado);
+router.put("/solicitudes/:id/motivo", verificarToken, actualizarMotivo);
+router.put("/solicitudes/:id", verificarToken, verificarRolAdmin,actualizarEstado);
 router.delete("/solicitudes/:id", verificarToken, eliminarSolicitud);
 
 export default router;
