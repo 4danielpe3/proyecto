@@ -126,3 +126,40 @@ export const eliminarRegistro = async (req, res) => {
     res.status(500).json({ message: "Error interno del servidor" });
   }
 };
+
+export const actualizarRegistros = async (req, res) => {
+  try {
+    // Obtener todas las solicitudes aceptadas
+    const [solicitudes] = await conmysql.query(
+      `SELECT s.solicitud_id, s.user_id, s.vehiculo_id
+       FROM solicitudes s
+       WHERE s.estado = 'aceptada'`
+    );
+
+    let creados = 0;
+
+    for (const s of solicitudes) {
+      // Verificar si ya existe un registro para este vehículo
+      const [existe] = await conmysql.query(
+        `SELECT * FROM registros_visitas 
+         WHERE vehiculo_id = ? AND user_id = ?`,
+        [s.vehiculo_id, s.user_id]
+      );
+
+      if (existe.length === 0) {
+        // Crear el registro
+        await conmysql.query(
+          `INSERT INTO registros_visitas (user_id, vehiculo_id)
+           VALUES (?, ?)`,
+          [s.user_id, s.vehiculo_id]
+        );
+        creados++;
+      }
+    }
+
+    res.json({ message: `${creados} registros creados o actualizados correctamente` });
+  } catch (error) {
+    console.error("Error al actualizar registros:", error);
+    res.status(500).json({ message: "Error interno del servidor" });
+  }
+};

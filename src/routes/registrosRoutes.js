@@ -3,7 +3,8 @@ import {
   crearRegistroVisita,
   listarRegistros,
   listarMisRegistros,
-  eliminarRegistro
+  eliminarRegistro,
+  actualizarRegistros
 } from "../controladores/registrosCtrl.js";
 
 import { verificarToken } from "../middlewares/verificarToken.js";
@@ -14,6 +15,7 @@ const router = Router();
 // Crear registro (usuario autenticado con solicitud aceptada)
 router.post("/registros", verificarToken, crearRegistroVisita);
 
+router.post("/registros/actualizar", verificarToken, verificarRolAdmin, actualizarRegistros);
 // Listar registros con solicitudes activas (admin)
 router.get("/registros", verificarToken, verificarRolAdmin, listarRegistros);
 
