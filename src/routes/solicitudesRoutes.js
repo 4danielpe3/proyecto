@@ -17,7 +17,7 @@ router.post("/solicitudes", verificarToken, crearSolicitud);
 router.get("/solicitudes", verificarToken, verificarRolAdmin, listarSolicitudes);
 router.get("/solicitudes/mis-solicitudes", verificarToken, listarMisSolicitudes);
 router.get("/solicitudes/:id", verificarToken, obtenerSolicitud);
-router.put("/solicitudes/:id", verificarToken, verificarRolAdmin, actualizarEstado);
-router.delete("/solicitudes/:id", verificarToken, verificarRolAdmin, eliminarSolicitud);
+router.put("/solicitudes/:id", verificarToken, actualizarEstado);
+router.delete("/solicitudes/:id", verificarToken, eliminarSolicitud);
 
 export default router;
