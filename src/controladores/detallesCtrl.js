@@ -1,4 +1,6 @@
 import { conmysql } from "../db.js";
+import { pool } from '../db.js'; // ajusta la ruta según tu proyecto
+
 
 // ============================
 // 🧩 CREAR DETALLES (solo cliente autenticado)
