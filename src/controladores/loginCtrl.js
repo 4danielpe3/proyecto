@@ -18,17 +18,24 @@ export const login = async (req, res) => {
   }
 
   try {
+    // Obtenemos al usuario sin filtrar por estado
     const [rows] = await conmysql.query(
-      "SELECT * FROM usuarios WHERE username = ? AND estado = 'activo'",
+      "SELECT * FROM usuarios WHERE username = ?",
       [username]
     );
 
     if (rows.length === 0) {
-      return res.status(404).json({ message: "Usuario no encontrado o bloqueado" });
+      return res.status(404).json({ message: "Usuario no encontrado" });
     }
 
     const user = rows[0];
-    const claveMD5 = md5Hash(contrasena);
+
+    // Verificamos si está inactivo
+    if (user.estado !== 'activo') {
+      return res.status(403).json({ message: "Usuario inactivo. Contacte al administrador." });
+    }
+
+    const claveMD5 = createHash("md5").update(contrasena).digest("hex");
 
     if (user.contrasena !== claveMD5) {
       return res.status(401).json({ message: "Contraseña incorrecta" });
@@ -50,11 +57,13 @@ export const login = async (req, res) => {
         rol: user.rol,
       },
     });
+
   } catch (error) {
     console.error("Error en login:", error);
     res.status(500).json({ message: "Error interno del servidor" });
   }
 };
+
 
 // ======================
 // 🧩 REGISTRO DE USUARIOS VISITANTES
